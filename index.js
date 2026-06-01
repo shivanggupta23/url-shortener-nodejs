@@ -32,28 +32,33 @@ app.get("/", (req, res) => {
         <p id="result"></p>
 
         <script>
-            async function shorten() {
-                const url = document.getElementById('url').value;
+async function shorten() {
+    const url = document.getElementById("url").value;
 
-                const response = await fetch('/url', {
-                    method:'POST',
-                    headers:{
-                        'Content-Type':'application/json'
-                    },
-                    body: JSON.stringify({url})
-                });
+    const response = await fetch("/url", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ url })
+    });
 
-                const data = await response.json();
+    const data = await response.json();
 
-                document.getElementById('result').innerHTML =
-                    '<a href="https://url-shortener-nodejs-53fd.onrender.com/' +
-                    data.id +
-                    '" target="_blank">' +
-                    'https://url-shortener-nodejs-53fd.onrender.com/' +
-                    data.id +
-                    '</a>';
-            }
-        </script>
+    console.log("Response:", data);
+
+    if (data.id) {
+        const shortUrl =
+            "https://url-shortener-nodejs-53fd.onrender.com/" + data.id;
+
+        document.getElementById("result").innerHTML =
+            `<a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+    } else {
+        document.getElementById("result").innerHTML =
+            "Error: " + JSON.stringify(data);
+    }
+}
+</script>
     </body>
     </html>
     `);
