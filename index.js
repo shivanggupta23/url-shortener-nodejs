@@ -22,8 +22,40 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
     res.send(`
-        <h1>URL Shortener API</h1>
-        <p>Backend is running successfully 🚀</p>
+    <html>
+    <body>
+        <h2>URL Shortener</h2>
+
+        <input id="url" placeholder="Enter URL" style="width:300px">
+        <button onclick="shorten()">Shorten</button>
+
+        <p id="result"></p>
+
+        <script>
+            async function shorten() {
+                const url = document.getElementById('url').value;
+
+                const response = await fetch('/url', {
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({url})
+                });
+
+                const data = await response.json();
+
+                document.getElementById('result').innerHTML =
+                    '<a href="https://url-shortener-nodejs-53fd.onrender.com/' +
+                    data.id +
+                    '" target="_blank">' +
+                    'https://url-shortener-nodejs-53fd.onrender.com/' +
+                    data.id +
+                    '</a>';
+            }
+        </script>
+    </body>
+    </html>
     `);
 });
 
