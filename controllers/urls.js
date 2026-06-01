@@ -10,8 +10,10 @@ async function handleGenerateShortURL(req,res){
         redirectURL: body.url,
         visitHistory:[],
     });
-    return res.json({id:shortID});
-}
+    return res.json({
+    id: shortID,
+    shortUrl: `https://url-shortener-nodejs-53fd.onrender.com/${shortID}`
+});
 
 async function getAnalytics(req,res){
     const shortId  = req.params.shortId;
