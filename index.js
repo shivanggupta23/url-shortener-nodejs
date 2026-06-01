@@ -20,6 +20,13 @@ process.env.MONGO_URL
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+    res.send(`
+        <h1>URL Shortener API</h1>
+        <p>Backend is running successfully 🚀</p>
+    `);
+});
+
 app.use("/url",urlRoute);
 
 app.get('/:shortId', async(req,res)=>{
