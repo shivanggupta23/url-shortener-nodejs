@@ -52,7 +52,7 @@ async function shorten() {
             "https://url-shortener-nodejs-53fd.onrender.com/" + data.id;
 
         document.getElementById("result").innerHTML =
-            `<a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+            \`<a href="\${shortUrl}" target="_blank">\${shortUrl}</a>\`;
     } else {
         document.getElementById("result").innerHTML =
             "Error: " + JSON.stringify(data);
