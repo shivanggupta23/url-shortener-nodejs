@@ -38,4 +38,4 @@ async function getAnalytics(req, res) {
 module.exports = {
     handleGenerateShortURL,
     getAnalytics
-};
+}

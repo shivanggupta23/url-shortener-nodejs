@@ -66,6 +66,17 @@ async function shorten() {
 
 app.use("/url",urlRoute);
 
+app.get("/stats/:shortId", async(req,res)=>{
+    const result = await URL.findOne({
+        shortId:req.params.shortId
+    });
+
+    res.send(`
+        <h2>Analytics</h2>
+        <p>Total Clicks: ${result.visitHistory.length}</p>
+    `);
+});
+
 app.get('/:shortId', async(req,res)=>{
 
     const shortId = req.params.shortId;
