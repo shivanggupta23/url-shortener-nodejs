@@ -70,18 +70,20 @@ app.get('/:shortId', async(req,res)=>{
 
     const shortId = req.params.shortId;
 
-    const entry = await URL.findOneAndUpdate(
-        {
-            shortId
-        },
-        {
-            $push:{
-                visitHistory:{
-                    timestamp: Date.now()
-                }
+    console.log("Searching for:", shortId);
+
+const entry = await URL.findOneAndUpdate(
+    { shortId: shortId },
+    {
+        $push:{
+            visitHistory:{
+                timeStamp: Date.now()
             }
         }
-    );
+    }
+);
+
+console.log("Found entry:", entry);
 
     if(!entry){
         return res.status(404).json({
