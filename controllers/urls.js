@@ -1,27 +1,41 @@
-const shortid = require("shortid")
-const URL = require('../models/url');
-async function handleGenerateShortURL(req,res){
+const shortid = require("shortid");
+const URL = require("../models/url");
+
+async function handleGenerateShortURL(req, res) {
     const body = req.body;
-    if(!body.url) return res.status(400).json({error: 'url is required'})
+
+    if (!body.url) {
+        return res.status(400).json({
+            error: "url is required"
+        });
+    }
+
     const shortID = shortid();
-    
+
     await URL.create({
         shortId: shortID,
         redirectURL: body.url,
-        visitHistory:[],
+        visitHistory: [],
     });
-    return res.json({
-    id: shortID,
-    shortUrl: `https://url-shortener-nodejs-53fd.onrender.com/${shortID}`
-});
 
-async function getAnalytics(req,res){
-    const shortId  = req.params.shortId;
-    const result = await URL.findOne({shortId});
-    return res.json({totalClicks:result.visitHistory.length,
+    return res.json({
+        id: shortID,
+        shortUrl: `https://url-shortener-nodejs-53fd.onrender.com/${shortID}`
+    });
+}   // <-- THIS BRACE WAS MISSING
+
+async function getAnalytics(req, res) {
+    const shortId = req.params.shortId;
+
+    const result = await URL.findOne({ shortId });
+
+    return res.json({
+        totalClicks: result.visitHistory.length,
         analytics: result.visitHistory,
     });
 }
 
-
-module.exports={handleGenerateShortURL, getAnalytics};
+module.exports = {
+    handleGenerateShortURL,
+    getAnalytics
+};
